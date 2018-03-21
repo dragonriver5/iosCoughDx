@@ -12,6 +12,7 @@
 		841265FD20621AAA00B823C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 841265FB20621AAA00B823C8 /* Main.storyboard */; };
 		841265FF20621AAA00B823C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 841265FE20621AAA00B823C8 /* Assets.xcassets */; };
 		8412660220621AAA00B823C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8412660020621AAA00B823C8 /* LaunchScreen.storyboard */; };
+		8412660A2062258300B823C8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 841266092062258300B823C8 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		841265FE20621AAA00B823C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8412660120621AAA00B823C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8412660320621AAA00B823C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		841266092062258300B823C8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +40,7 @@
 		841265EB20621AA900B823C8 = {
 			isa = PBXGroup;
 			children = (
+				841266092062258300B823C8 /* Default-568h@2x.png */,
 				841265F620621AA900B823C8 /* iosCoughDx */,
 				841265F520621AA900B823C8 /* Products */,
 			);
@@ -124,6 +127,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8412660220621AAA00B823C8 /* LaunchScreen.storyboard in Resources */,
+				8412660A2062258300B823C8 /* Default-568h@2x.png in Resources */,
 				841265FF20621AAA00B823C8 /* Assets.xcassets in Resources */,
 				841265FD20621AAA00B823C8 /* Main.storyboard in Resources */,
 			);
@@ -276,7 +280,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CAXT88TLC2;
-				INFOPLIST_FILE = CoughDx/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/iosCoughDx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = CoughDx.iosCoughDx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -291,7 +295,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CAXT88TLC2;
-				INFOPLIST_FILE = CoughDx/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/iosCoughDx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = CoughDx.iosCoughDx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
