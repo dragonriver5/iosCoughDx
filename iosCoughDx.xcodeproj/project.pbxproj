@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		841265F420621AA900B823C8 /* CoughDx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoughDx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		841265F420621AA900B823C8 /* iosCoughDx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosCoughDx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		841265F720621AA900B823C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		841265F920621AAA00B823C8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		841265FC20621AAA00B823C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,7 +38,7 @@
 		841265EB20621AA900B823C8 = {
 			isa = PBXGroup;
 			children = (
-				841265F620621AA900B823C8 /* CoughDx */,
+				841265F620621AA900B823C8 /* iosCoughDx */,
 				841265F520621AA900B823C8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,12 +46,12 @@
 		841265F520621AA900B823C8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				841265F420621AA900B823C8 /* CoughDx.app */,
+				841265F420621AA900B823C8 /* iosCoughDx.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		841265F620621AA900B823C8 /* CoughDx */ = {
+		841265F620621AA900B823C8 /* iosCoughDx */ = {
 			isa = PBXGroup;
 			children = (
 				841265F720621AA900B823C8 /* AppDelegate.swift */,
@@ -61,15 +61,15 @@
 				8412660020621AAA00B823C8 /* LaunchScreen.storyboard */,
 				8412660320621AAA00B823C8 /* Info.plist */,
 			);
-			path = CoughDx;
+			path = iosCoughDx;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		841265F320621AA900B823C8 /* CoughDx */ = {
+		841265F320621AA900B823C8 /* iosCoughDx */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8412660620621AAA00B823C8 /* Build configuration list for PBXNativeTarget "CoughDx" */;
+			buildConfigurationList = 8412660620621AAA00B823C8 /* Build configuration list for PBXNativeTarget "iosCoughDx" */;
 			buildPhases = (
 				841265F020621AA900B823C8 /* Sources */,
 				841265F120621AA900B823C8 /* Frameworks */,
@@ -79,9 +79,9 @@
 			);
 			dependencies = (
 			);
-			name = CoughDx;
+			name = iosCoughDx;
 			productName = CoughDx;
-			productReference = 841265F420621AA900B823C8 /* CoughDx.app */;
+			productReference = 841265F420621AA900B823C8 /* iosCoughDx.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -100,7 +100,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 841265EF20621AA900B823C8 /* Build configuration list for PBXProject "CoughDx" */;
+			buildConfigurationList = 841265EF20621AA900B823C8 /* Build configuration list for PBXProject "iosCoughDx" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -113,7 +113,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				841265F320621AA900B823C8 /* CoughDx */,
+				841265F320621AA900B823C8 /* iosCoughDx */,
 			);
 		};
 /* End PBXProject section */
@@ -275,9 +275,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CAXT88TLC2;
 				INFOPLIST_FILE = CoughDx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = CoughDx.CoughDx;
+				PRODUCT_BUNDLE_IDENTIFIER = CoughDx.iosCoughDx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -289,9 +290,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CAXT88TLC2;
 				INFOPLIST_FILE = CoughDx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = CoughDx.CoughDx;
+				PRODUCT_BUNDLE_IDENTIFIER = CoughDx.iosCoughDx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -301,7 +303,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		841265EF20621AA900B823C8 /* Build configuration list for PBXProject "CoughDx" */ = {
+		841265EF20621AA900B823C8 /* Build configuration list for PBXProject "iosCoughDx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8412660420621AAA00B823C8 /* Debug */,
@@ -310,7 +312,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8412660620621AAA00B823C8 /* Build configuration list for PBXNativeTarget "CoughDx" */ = {
+		8412660620621AAA00B823C8 /* Build configuration list for PBXNativeTarget "iosCoughDx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8412660720621AAA00B823C8 /* Debug */,

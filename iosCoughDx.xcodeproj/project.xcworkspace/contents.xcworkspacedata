@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:CoughDx.xcodeproj">
+      location = "self:/Users/jhwnkim/src/CoughDx/iosCoughDx.xcodeproj">
    </FileRef>
 </Workspace>
