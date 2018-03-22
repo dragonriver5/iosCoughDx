@@ -11,7 +11,7 @@ import AVFoundation
 
 var audioRecorder:AVAudioRecorder!
 var audioPlayer:AVAudioPlayer!
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVAudioPlayerDelegate {
 
     @IBOutlet weak var recordButton:UIButton!
     @IBOutlet weak var playButton:UIButton!
@@ -30,7 +30,11 @@ class ViewController: UIViewController {
             let audioSession = AVAudioSession.sharedInstance()
             
             do {
+                prepareAudioRecorder()
+                //try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
                 try audioSession.setActive(true)
+                
+                //try deleteFileIfExists()
                 audioRecorder.record()
             } catch {
                 print(error)
@@ -70,9 +74,10 @@ class ViewController: UIViewController {
         
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-            try audioRecorder = AVAudioRecorder(url: URL(fileURLWithPath: self.audioFileLocation()),
-                                                settings: self.audioRecorderSettings())
-            
+            if audioRecorder == nil {
+                try audioRecorder = AVAudioRecorder(url: URL(fileURLWithPath: self.audioFileLocation()),
+                                                     settings: self.audioRecorderSettings())
+            }
             audioRecorder.prepareToRecord()
         } catch {
             print(error)
@@ -84,10 +89,26 @@ class ViewController: UIViewController {
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
             
-            try audioPlayer = AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.audioFileLocation()))
             
-            audioPlayer.prepareToPlay()
-            audioPlayer.play()
+            //if audioPlayer == nil {
+                try audioPlayer = AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.audioFileLocation()))
+                audioPlayer.delegate = self
+            //}
+                
+            if audioPlayer.isPlaying {
+                audioPlayer.stop()
+                playButton.setTitle("Play", for: .normal)
+                
+                try audioSession.setActive(false)
+            }
+            else {
+                try audioSession.setActive(true)
+                
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+                
+                playButton.setTitle("Stop", for: .normal)
+            }
         }
         catch{
             print(error)
@@ -126,6 +147,36 @@ class ViewController: UIViewController {
         let fileManager = FileManager.default
         
         return fileManager.fileExists(atPath: self.audioFileLocation())
+    }
+    
+    func deleteFileIfExists () {
+        let fileManager = FileManager.default
+        do {
+            if fileManager.fileExists(atPath: self.audioFileLocation()) {
+                try fileManager.removeItem(atPath: self.audioFileLocation())
+                
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    // MARK: Handlers for AudioPlayer events
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        
+        print(flag)
+        print("Audio playing done")
+        
+        playButton.setTitle("Play", for: .normal)
+        
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+            
+            try audioSession.setActive(false)
+        }
+        catch {
+            print(error)
+        }
     }
 }
 
