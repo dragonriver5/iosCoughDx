@@ -47,11 +47,16 @@
                                     <action selector="playButtonPressedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1wt-SF-LzQ"/>
                                 </connections>
                             </button>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wwq-8h-wit">
+                                <rect key="frame" x="84" y="354" width="206" height="111"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="picker" destination="Wwq-8h-wit" id="r5c-nZ-61A"/>
                         <outlet property="playButton" destination="0QR-or-U5P" id="cMo-HY-r5F"/>
                         <outlet property="recordButton" destination="xW5-QZ-JA0" id="oKt-Ja-NR1"/>
                     </connections>

@@ -11,19 +11,33 @@ import AVFoundation
 
 var audioRecorder:AVAudioRecorder!
 var audioPlayer:AVAudioPlayer!
-class ViewController: UIViewController, AVAudioPlayerDelegate {
+
+class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    
 
     @IBOutlet weak var recordButton:UIButton!
     @IBOutlet weak var playButton:UIButton!
+    @IBOutlet weak var picker: UIPickerView!
+    
+    var recordList = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        // Initialize Picker list
+        recordList = ["test1", "test2"]
+        
+        // Connect data to picker:
+        self.picker.delegate = self
+        self.picker.dataSource = self
+        
         self.prepareAudioRecorder()
     }
 
-    
+
+    // Button Pressed Functions
     @IBAction func recordButtonPressed(sender:AnyObject) {
         if !audioRecorder.isRecording {
             // Start Recording
@@ -31,10 +45,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             
             do {
                 prepareAudioRecorder()
-                //try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+                
                 try audioSession.setActive(true)
                 
-                //try deleteFileIfExists()
                 audioRecorder.record()
             } catch {
                 print(error)
@@ -88,13 +101,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         let audioSession = AVAudioSession.sharedInstance();
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioPlayer = AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.audioFileLocation()))
             
+            audioPlayer.delegate = self
             
-            //if audioPlayer == nil {
-                try audioPlayer = AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.audioFileLocation()))
-                audioPlayer.delegate = self
-            //}
-                
             if audioPlayer.isPlaying {
                 audioPlayer.stop()
                 playButton.setTitle("Play", for: .normal)
@@ -118,6 +128,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
 
     // MARK: Helpers
     func audioFileLocation() -> String {
@@ -177,6 +189,22 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         catch {
             print(error)
         }
+    }
+    
+    // PickerView Delegate functions
+    // The number of columns of data
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // The number of rows of data
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return recordList.count
+    }
+    
+    // The data to return for the row and component (column) that's being passed in
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return recordList[row]
     }
 }
 
