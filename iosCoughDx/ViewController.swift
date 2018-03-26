@@ -9,18 +9,23 @@
 import UIKit
 import AVFoundation
 
+//
+let recordInterval = 2.0;
+
 var audioRecorder:AVAudioRecorder!
 var audioPlayer:AVAudioPlayer!
 
-class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var recordButton:UIButton!
     @IBOutlet weak var playButton:UIButton!
     @IBOutlet weak var picker: UIPickerView!
     
+    // State variables
     var recordList = [String]()
     var fileCounter = Int(0)
-    //var recordFilename = String("audioFile.wav")
+    var isAcquiring  = Bool(false)
+    
     var recordFilename = String("audioFile_0.wav")
     var playFilename = String("audioFile_0.wav")
     
@@ -41,7 +46,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
 
     // Button Pressed Functions
     @IBAction func recordButtonPressed(sender:AnyObject) {
-        if !audioRecorder.isRecording {
+        //if !audioRecorder.isRecording {
+        if !isAcquiring {
             // Start Recording
             let audioSession = AVAudioSession.sharedInstance()
             
@@ -50,14 +56,18 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
                 
                 try audioSession.setActive(true)
                 
-                audioRecorder.record()
+                audioRecorder.record(forDuration: recordInterval)
+                
+                isAcquiring = true
             } catch {
                 print(error)
+                isAcquiring = false
             }
         } else {
             // Stop Recording
+            isAcquiring = false
             audioRecorder.stop()
-            
+            /*
             let audioSession = AVAudioSession.sharedInstance()
             
             do {
@@ -66,7 +76,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
                 print(error)
             }
             
-            // Check
+            // Check if file was generated and recording successful
             print(recordFilename)
             if self.verifyFileExists(filename: recordFilename) {
                 print("File Exists")
@@ -82,13 +92,17 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
             } else {
                 print("There was a problem recording")
                 
-            }
+            }*/
         }
         
         self.updateRecordButtonTitle()
     }
     
     @IBAction func playButtonPressed(sender:AnyObject) {
+        // Stop recording if it is acquiring
+        if isAcquiring {
+            self.recordButtonPressed(sender: self)
+        }
         self.playAudio()
     }
     
@@ -104,7 +118,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
             // Create AVAudioRecorder object
             try audioRecorder = AVAudioRecorder(url: URL(fileURLWithPath: self.audioFileLocation(filename: recordFilename)), settings: self.audioRecorderSettings())
             
+            audioRecorder.delegate = self
             audioRecorder.prepareToRecord()
+            
         } catch {
             print(error)
         }
@@ -187,7 +203,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
         }
     }
     
-    // MARK: Handlers for AudioPlayer events
+    // MARK: Handlers for AudioRecorder and AudioPlayer finish events
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         
         print(flag)
@@ -203,6 +219,57 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
         catch {
             print(error)
         }
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        print(flag)
+        print("Audio finished recording")
+        
+        // Check if file was generated and recording successful
+        print(recordFilename)
+        if self.verifyFileExists(filename: recordFilename) {
+            print("File Exists")
+            playButton.isHidden = false
+            picker.isHidden = false
+            recordList.append(recordFilename)
+            picker.reloadAllComponents()
+            
+            // Increment file counter
+            fileCounter += 1
+            recordFilename = "audioFile_"+String(fileCounter)+".wav"
+            
+        } else {
+            print("There was a problem recording")
+        }
+        
+        // If is still acquiring than and restart recording
+        if isAcquiring {
+            // Start Recording
+            //let audioSession = AVAudioSession.sharedInstance()
+            
+            do {
+                prepareAudioRecorder()
+                
+                //try audioSession.setActive(true)
+                
+                audioRecorder.record(forDuration: recordInterval)
+                
+                isAcquiring = true
+            } catch {
+                print(error)
+                isAcquiring = false
+            }
+        }
+        else {
+            let audioSession = AVAudioSession.sharedInstance()
+            
+            do {
+                try audioSession.setActive(false)
+            } catch {
+                print(error)
+            }
+        }
+        
     }
     
     // PickerView Delegate functions
