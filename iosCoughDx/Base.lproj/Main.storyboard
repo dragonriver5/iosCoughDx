@@ -47,7 +47,7 @@
                                     <action selector="playButtonPressedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1wt-SF-LzQ"/>
                                 </connections>
                             </button>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wwq-8h-wit">
+                            <pickerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wwq-8h-wit">
                                 <rect key="frame" x="84" y="354" width="206" height="111"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>

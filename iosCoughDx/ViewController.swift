@@ -13,21 +13,23 @@ var audioRecorder:AVAudioRecorder!
 var audioPlayer:AVAudioPlayer!
 
 class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    
 
     @IBOutlet weak var recordButton:UIButton!
     @IBOutlet weak var playButton:UIButton!
     @IBOutlet weak var picker: UIPickerView!
     
     var recordList = [String]()
+    var fileCounter = Int(0)
+    //var recordFilename = String("audioFile.wav")
+    var recordFilename = String("audioFile_0.wav")
+    var playFilename = String("audioFile_0.wav")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         // Initialize Picker list
-        recordList = ["test1", "test2"]
+        recordList = []
         
         // Connect data to picker:
         self.picker.delegate = self
@@ -65,9 +67,18 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
             }
             
             // Check
-            if self.verifyFileExists() {
+            print(recordFilename)
+            if self.verifyFileExists(filename: recordFilename) {
                 print("File Exists")
                 playButton.isHidden = false
+                picker.isHidden = false
+                recordList.append(recordFilename)
+                picker.reloadAllComponents()
+                
+                // Increment file counter
+                fileCounter += 1
+                recordFilename = "audioFile_"+String(fileCounter)+".wav"
+                
             } else {
                 print("There was a problem recording")
                 
@@ -87,10 +98,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
         
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-            if audioRecorder == nil {
-                try audioRecorder = AVAudioRecorder(url: URL(fileURLWithPath: self.audioFileLocation()),
-                                                     settings: self.audioRecorderSettings())
-            }
+            
+            // Destroy any previous audioRecorder object
+            audioRecorder = nil
+            // Create AVAudioRecorder object
+            try audioRecorder = AVAudioRecorder(url: URL(fileURLWithPath: self.audioFileLocation(filename: recordFilename)), settings: self.audioRecorderSettings())
+            
             audioRecorder.prepareToRecord()
         } catch {
             print(error)
@@ -101,7 +114,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
         let audioSession = AVAudioSession.sharedInstance();
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
-            try audioPlayer = AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.audioFileLocation()))
+            //try audioPlayer = AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.audioFileLocation()))
+            try audioPlayer = AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.audioFileLocation(filename: playFilename)))
             
             audioPlayer.delegate = self
             
@@ -132,13 +146,13 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
 
 
     // MARK: Helpers
-    func audioFileLocation() -> String {
+    func audioFileLocation(filename: String) -> String {
         return
-            NSTemporaryDirectory().appending("audioRecording.m4a")
+            NSTemporaryDirectory().appending(filename)
     }
     
     func audioRecorderSettings() -> [String:Any] {
-        let settings = [AVFormatIDKey : NSNumber.init(value: kAudioFormatAppleLossless),
+        let settings = [AVFormatIDKey : NSNumber.init(value: kAudioFormatLinearPCM),
                         AVSampleRateKey : NSNumber.init(value: 44100.0),
                         AVNumberOfChannelsKey : NSNumber.init(value: 1),
                         AVLinearPCMBitDepthKey : NSNumber.init(value: 16),
@@ -155,17 +169,17 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
         }
     }
     
-    func verifyFileExists() -> Bool {
+    func verifyFileExists(filename: String) -> Bool {
         let fileManager = FileManager.default
         
-        return fileManager.fileExists(atPath: self.audioFileLocation())
+        return fileManager.fileExists(atPath: self.audioFileLocation(filename: filename))
     }
     
-    func deleteFileIfExists () {
+    func deleteFileIfExists (filename: String) {
         let fileManager = FileManager.default
         do {
-            if fileManager.fileExists(atPath: self.audioFileLocation()) {
-                try fileManager.removeItem(atPath: self.audioFileLocation())
+            if fileManager.fileExists(atPath: self.audioFileLocation(filename: filename)) {
+                try fileManager.removeItem(atPath: self.audioFileLocation(filename: filename))
                 
             }
         } catch {
@@ -205,6 +219,11 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, UIPickerViewDeleg
     // The data to return for the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return recordList[row]
+    }
+    
+    // When user selects a file on the picker
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        playFilename = recordList[row]
     }
 }
 
